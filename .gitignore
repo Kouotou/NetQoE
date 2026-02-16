@@ -49,3 +49,4 @@ __pycache__/
 .env
 .DS_Store
 .vscode/
+node_modules

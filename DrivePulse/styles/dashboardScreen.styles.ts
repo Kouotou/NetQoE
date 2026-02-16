@@ -2,28 +2,41 @@ import { StyleSheet } from "react-native";
 export const dashboardScreenStyles = StyleSheet.create({
  container: {
     flex: 1,
-    backgroundColor: "#F4F6F8",
-    alignItems: "center",
+    backgroundColor: "#F3F4F6",
     paddingHorizontal: 20,
   },
 
-  title: {
-    fontSize: 22,
-    fontWeight: "700",
-    marginTop: 20,
-    color: "#1F2937",
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginVertical: 10,
   },
 
-  subtitle: {
+  logoRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+
+  logoText: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
+
+  headerRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+
+  battery: {
     fontSize: 14,
-    color: "#6B7280",
-    marginBottom: 20,
   },
 
   gaugeContainer: {
     alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 20,
+    marginVertical: 10,
   },
 
   gaugeText: {
@@ -32,9 +45,9 @@ export const dashboardScreenStyles = StyleSheet.create({
   },
 
   signalValue: {
-    fontSize: 48,
+    fontSize: 44,
     fontWeight: "700",
-    color: "#F59E0B",
+    color: "#1565C0",
   },
 
   unit: {
@@ -42,39 +55,30 @@ export const dashboardScreenStyles = StyleSheet.create({
     color: "#6B7280",
   },
 
-  signalStatus: {
-    marginTop: 4,
+  good: {
     fontSize: 14,
-    color: "#F59E0B",
+    color: "#1565C0",
     fontWeight: "600",
+    marginTop: 4,
   },
 
   metricsRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    width: "80%",
-    marginVertical: 20,
+    justifyContent: "space-around",
+    marginVertical: 10,
   },
 
-  metric: {
-    alignItems: "center",
-  },
+  metric: { alignItems: "center" },
 
-  metricLabel: {
-    fontSize: 12,
-    color: "#6B7280",
-  },
+  metricLabel: { fontSize: 12, color: "#6B7280" },
 
-  metricValue: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#111827",
-  },
+  metricValue: { fontSize: 16, fontWeight: "600" },
 
-  networkToggle: {
+  networkRow: {
     flexDirection: "row",
-    marginVertical: 20,
-    gap: 10,
+    justifyContent: "center",
+    gap: 12,
+    marginVertical: 10,
   },
 
   networkButton: {
@@ -82,35 +86,98 @@ export const dashboardScreenStyles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 20,
     backgroundColor: "#E5E7EB",
-    color: "#374151",
-    fontWeight: "600",
   },
 
-  activeButton: {
-    backgroundColor: "#2563EB",
+  networkActive: {
+    backgroundColor: "#1565C0",
+  },
+
+  networkText: {
+    fontWeight: "600",
+    color: "#374151",
+  },
+
+  networkTextActive: {
     color: "#FFFFFF",
   },
 
   infoCard: {
-    width: "100%",
     backgroundColor: "#FFFFFF",
-    borderRadius: 12,
+    borderRadius: 14,
     padding: 16,
-    elevation: 3,
+    marginVertical: 10,
   },
 
   infoRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 12,
+    marginBottom: 10,
   },
 
-  infoLabel: {
-    color: "#6B7280",
+  infoLabel: { color: "#6B7280" },
+
+  infoValue: { fontWeight: "600" },
+
+  qoeCard: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 14,
+    padding: 16,
+    marginVertical: 10,
   },
 
-  infoValue: {
+  qoeTitle: {
     fontWeight: "600",
-    color: "#111827",
+    fontSize: 14,
+  },
+
+  qoeSubtitle: {
+    fontSize: 12,
+    color: "#6B7280",
+    marginBottom: 10,
+  },
+
+  qoeRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  qoeButton: {
+    borderWidth: 1,
+    borderColor: "#D1D5DB",
+    padding: 10,
+    borderRadius: 10,
+    width: 50,
+    alignItems: "center",
+  },
+
+  qoeSelected: {
+    backgroundColor: "#DCFCE7",
+    borderColor: "#22C55E",
+  },
+
+  qoeText: {
+    fontWeight: "600",
+  },
+
+  qoeTextSelected: {
+    color: "#15803D",
+  },
+
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: "auto",
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderColor: "#E5E7EB",
+  },
+
+  footerItem: {
+    alignItems: "center",
+  },
+
+  footerText: {
+    fontSize: 12,
+    color: "#9CA3AF",
   },
 });

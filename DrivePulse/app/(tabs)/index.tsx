@@ -1,98 +1,210 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TouchableOpacity,
+  StatusBar,
+} from "react-native";
+import { Ionicons, Feather } from "@expo/vector-icons";
+import Svg, { Path } from "react-native-svg";
+import { dashboardScreenStyles as styles } from "@/styles";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+const Gauge = () => {
+  const radius = 100;
+  const strokeWidth = 14;
+  const center = 120;
 
-export default function HomeScreen() {
+  const describeArc = (
+    x: number,
+    y: number,
+    radius: number,
+    startAngle: number,
+    endAngle: number
+  ) => {
+    const start = {
+      x: x + radius * Math.cos(startAngle),
+      y: y + radius * Math.sin(startAngle),
+    };
+    const end = {
+      x: x + radius * Math.cos(endAngle),
+      y: y + radius * Math.sin(endAngle),
+    };
+
+    return `
+      M ${start.x} ${start.y}
+      A ${radius} ${radius} 0 0 1 ${end.x} ${end.y}
+    `;
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+    <View style={styles.gaugeContainer}>
+      <Svg width={240} height={150}>
+        {/* background arc */}
+        <Path
+          d={describeArc(center, 120, radius, Math.PI, Math.PI * 2)}
+          stroke="#E5E7EB"
+          strokeWidth={strokeWidth}
+          fill="none"
+          strokeLinecap="round"
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+        {/* active arc */}
+        <Path
+          d={describeArc(center, 120, radius, Math.PI, Math.PI * 1.75)}
+          stroke="#1565C0"
+          strokeWidth={strokeWidth}
+          fill="none"
+          strokeLinecap="round"
+        />
+      </Svg>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      <View style={styles.gaugeText}>
+        <Text style={styles.signalValue}>-81</Text>
+        <Text style={styles.unit}>dBm</Text>
+        <Text style={styles.good}>Good</Text>
+      </View>
+    </View>
+  );
+};
+
+const QoEComponent = () => {
+  const [selected, setSelected] = useState<number | null>(null);
+
+  return (
+    <View style={styles.qoeCard}>
+      <Text style={styles.qoeTitle}>QoE Rating</Text>
+      <Text style={styles.qoeSubtitle}>
+        Rate your Quality of Experience
+      </Text>
+
+      <View style={styles.qoeRow}>
+        {[1, 2, 3, 4, 5].map((num) => (
+          <TouchableOpacity
+            key={num}
+            style={[
+              styles.qoeButton,
+              selected === num && styles.qoeSelected,
+            ]}
+            onPress={() => setSelected(num)}
+          >
+            <Text
+              style={[
+                styles.qoeText,
+                selected === num && styles.qoeTextSelected,
+              ]}
+            >
+              {num}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </View>
+  );
+};
+
+export default function App() {
+  const [network, setNetwork] = useState("4G");
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" />
+
+      {/* HEADER */}
+      <View style={styles.header}>
+        <View style={styles.logoRow}>
+          <Ionicons name="location" size={20} color="#1565C0" />
+          <Text style={styles.logoText}>DrivePulse</Text>
+        </View>
+
+        <View style={styles.headerRight}>
+          <Text style={styles.battery}>85%</Text>
+          <Feather name="settings" size={20} color="#1565C0" />
+        </View>
+      </View>
+
+      {/* GAUGE */}
+      <Gauge />
+
+      {/* METRICS */}
+      <View style={styles.metricsRow}>
+        <View style={styles.metric}>
+          <Text style={styles.metricLabel}>RSRQ</Text>
+          <Text style={styles.metricValue}>-20 dB</Text>
+        </View>
+        <View style={styles.metric}>
+          <Text style={styles.metricLabel}>SINR</Text>
+          <Text style={styles.metricValue}>48 dB</Text>
+        </View>
+      </View>
+
+      {/* NETWORK TOGGLE */}
+      <View style={styles.networkRow}>
+        {["4G", "3G", "2G"].map((type) => (
+          <TouchableOpacity
+            key={type}
+            style={[
+              styles.networkButton,
+              network === type && styles.networkActive,
+            ]}
+            onPress={() => setNetwork(type)}
+          >
+            <Text
+              style={[
+                styles.networkText,
+                network === type && styles.networkTextActive,
+              ]}
+            >
+              {type}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* INFO CARD */}
+      <View style={styles.infoCard}>
+        <InfoRow label="Cell ID" value="0x1A2B3C" />
+        <InfoRow label="Frequency" value="2600 MHz" />
+        <InfoRow label="Bandwidth" value="20 MHz" />
+        <InfoRow label="PCI" value="156" />
+      </View>
+
+      {/* QoE */}
+      <QoEComponent
+       />
+
+      {/* FOOTER
+      <View style={styles.footer}>
+        <FooterItem icon="activity" label="Dashboard" active />
+        <FooterItem icon="map" label="Map" />
+        <FooterItem icon="zap" label="Speed" />
+        <FooterItem icon="file-text" label="Logs" />
+        <FooterItem icon="settings" label="Settings" />
+      </View> */}
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+const InfoRow = ({ label, value }: any) => (
+  <View style={styles.infoRow}>
+    <Text style={styles.infoLabel}>{label}</Text>
+    <Text style={styles.infoValue}>{value}</Text>
+  </View>
+);
+
+// const FooterItem = ({ icon, label, active }: any) => (
+//   <View style={styles.footerItem}>
+//     <Feather
+//       name={icon}
+//       size={18}
+//       color={active ? "#1565C0" : "#9CA3AF"}
+//     />
+//     <Text
+//       style={[
+//         styles.footerText,
+//         active && { color: "#1565C0" },
+//       ]}
+//     >
+//       {label}
+//     </Text>
+//   </View>
+// );
