@@ -1,0 +1,29 @@
+On branch development
+Your branch is up to date with 'origin/development'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   .env.example
+	modified:   .gitignore
+	new file:   LICENSE
+	new file:   README.md
+	new file:   SETUP_GUIDE.md
+	modified:   app/database.py
+	modified:   app/routes/auth.py
+	new file:   app/src/main/java/com/netqoe/app/App.kt
+	new file:   app/src/main/java/com/netqoe/app/di
+	modified:   app/utils/security.py
+	new file:   build.gradle.kts
+	new file:   core
+	new file:   db_check.py
+	new file:   gradle.properties
+	new file:   register_user.py
+	modified:   requirements.txt
+	new file:   settings.gradle.kts
+	new file:   simple_check.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	push_output.txt
+	status.txt
+
