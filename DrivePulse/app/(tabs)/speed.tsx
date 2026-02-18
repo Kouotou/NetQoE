@@ -122,7 +122,7 @@ export default function SpeedScreen() {
       </View>
 
       {/* Bottom Navigation */}
-      <View style={styles.bottomNav}>
+     <View style={styles.bottomNav}>
         <NavItem icon={Activity} label="Dashboard" />
         <NavItem icon={MapIcon} label="Map" />
         <NavItem icon={Zap} label="Speed" active />

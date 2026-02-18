@@ -26,7 +26,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="Map"
         options={{
-          title: 'Explore',
+          title: 'Map',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
         }}
       />
@@ -39,16 +39,16 @@ export default function TabLayout() {
         />
 
         <Tabs.Screen
-        name="Logs"
+        name="log"
         options={{
-          title: 'Explore',
+          title: 'Logs',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
         }}
         />
         <Tabs.Screen
         name="Settings"
         options={{
-          title: 'Explore',
+          title: 'Settings',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
         }}
         />
