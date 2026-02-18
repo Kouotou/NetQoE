@@ -121,14 +121,6 @@ export default function SpeedScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Bottom Navigation */}
-     <View style={styles.bottomNav}>
-        <NavItem icon={Activity} label="Dashboard" />
-        <NavItem icon={MapIcon} label="Map" />
-        <NavItem icon={Zap} label="Speed" active />
-        <NavItem icon={FileText} label="Logs" />
-        <NavItem icon={Settings} label="Settings" />
-      </View>
     </SafeAreaView>
   );
 }

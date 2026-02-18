@@ -31,10 +31,7 @@ const Gauge = () => {
       y: y + radius * Math.sin(endAngle),
     };
 
-    return `
-      M ${start.x} ${start.y}
-      A ${radius} ${radius} 0 0 1 ${end.x} ${end.y}
-    `;
+    return `M ${start.x} ${start.y} A ${radius} ${radius} 0 0 1 ${end.x} ${end.y}`;
   };
 
   return (
@@ -73,25 +70,17 @@ const QoEComponent = () => {
   return (
     <View style={styles.qoeCard}>
       <Text style={styles.qoeTitle}>QoE Rating</Text>
-      <Text style={styles.qoeSubtitle}>
-        Rate your Quality of Experience
-      </Text>
+      <Text style={styles.qoeSubtitle}>Rate your Quality of Experience</Text>
 
       <View style={styles.qoeRow}>
         {[1, 2, 3, 4, 5].map((num) => (
           <TouchableOpacity
             key={num}
-            style={[
-              styles.qoeButton,
-              selected === num && styles.qoeSelected,
-            ]}
+            style={[styles.qoeButton, selected === num && styles.qoeSelected]}
             onPress={() => setSelected(num)}
           >
             <Text
-              style={[
-                styles.qoeText,
-                selected === num && styles.qoeTextSelected,
-              ]}
+              style={[styles.qoeText, selected === num && styles.qoeTextSelected]}
             >
               {num}
             </Text>
@@ -102,7 +91,14 @@ const QoEComponent = () => {
   );
 };
 
-export default function App() {
+const InfoRow = ({ label, value }: { label: string; value: string }) => (
+  <View style={styles.infoRow}>
+    <Text style={styles.infoLabel}>{label}</Text>
+    <Text style={styles.infoValue}>{value}</Text>
+  </View>
+);
+
+export default function Dashboard() {
   const [network, setNetwork] = useState("4G");
 
   return (
@@ -142,10 +138,7 @@ export default function App() {
         {["4G", "3G", "2G"].map((type) => (
           <TouchableOpacity
             key={type}
-            style={[
-              styles.networkButton,
-              network === type && styles.networkActive,
-            ]}
+            style={[styles.networkButton, network === type && styles.networkActive]}
             onPress={() => setNetwork(type)}
           >
             <Text
@@ -169,42 +162,7 @@ export default function App() {
       </View>
 
       {/* QoE */}
-      <QoEComponent
-       />
-
-      {/* FOOTER
-      <View style={styles.footer}>
-        <FooterItem icon="activity" label="Dashboard" active />
-        <FooterItem icon="map" label="Map" />
-        <FooterItem icon="zap" label="Speed" />
-        <FooterItem icon="file-text" label="Logs" />
-        <FooterItem icon="settings" label="Settings" />
-      </View> */}
+      <QoEComponent />
     </SafeAreaView>
   );
 }
-
-const InfoRow = ({ label, value }: any) => (
-  <View style={styles.infoRow}>
-    <Text style={styles.infoLabel}>{label}</Text>
-    <Text style={styles.infoValue}>{value}</Text>
-  </View>
-);
-
-// const FooterItem = ({ icon, label, active }: any) => (
-//   <View style={styles.footerItem}>
-//     <Feather
-//       name={icon}
-//       size={18}
-//       color={active ? "#1565C0" : "#9CA3AF"}
-//     />
-//     <Text
-//       style={[
-//         styles.footerText,
-//         active && { color: "#1565C0" },
-//       ]}
-//     >
-//       {label}
-//     </Text>
-//   </View>
-// );

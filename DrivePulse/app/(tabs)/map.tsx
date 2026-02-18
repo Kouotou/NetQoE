@@ -111,14 +111,7 @@ export default function MapScreen() {
         <StatItem label="Avg Signal" value="-88 dBm" />
       </View>
 
-      {/* Footer */}
-      {/* <View style={styles.footer}>
-        <FooterItem icon="activity" label="Dashboard" />
-        <FooterItem icon="map" label="Map" active />
-        <FooterItem icon="zap" label="Speed" />
-        <FooterItem icon="file-text" label="Logs" />
-        <FooterItem icon="settings" label="Settings" />
-      </View> */}
+      
     </SafeAreaView>
   );
 }
