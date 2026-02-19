@@ -3,7 +3,7 @@ export const signupScreenStyles = StyleSheet.create({
 
   wrapper: {
     flex: 1,
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#b3cde6',
     paddingHorizontal: 20,
     paddingTop: 50,
   },
@@ -45,7 +45,7 @@ export const signupScreenStyles = StyleSheet.create({
   },
   input: {
     marginBottom: 16,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#a1a5ab',
   },
   inputOutline: {
     borderRadius: 10,

@@ -10,7 +10,7 @@ export const dashboardScreenStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginVertical: 10,
+    marginVertical: 40,
   },
 
   logoRow: {
@@ -45,21 +45,23 @@ export const dashboardScreenStyles = StyleSheet.create({
   },
 
   signalValue: {
-    fontSize: 44,
+    fontSize: 34,
     fontWeight: "700",
     color: "#1565C0",
+    top:60,
   },
 
   unit: {
     fontSize: 14,
     color: "#6B7280",
+     top:60,
   },
 
   good: {
     fontSize: 14,
     color: "#1565C0",
     fontWeight: "600",
-    marginTop: 4,
+   bottom: 20,
   },
 
   metricsRow: {
@@ -178,6 +180,6 @@ export const dashboardScreenStyles = StyleSheet.create({
 
   footerText: {
     fontSize: 12,
-    color: "#9CA3AF",
+    color: "#040608",
   },
 });

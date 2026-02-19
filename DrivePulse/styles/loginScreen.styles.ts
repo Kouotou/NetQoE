@@ -3,14 +3,14 @@ export const loginScreenStyles = StyleSheet.create({
 
  wrapper: {
     flex: 1,
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#adceee',
     paddingHorizontal: 20,
     paddingTop: 50,
   },
   backText: {
     fontSize: 16,
     marginBottom: 20,
-    color: '#333',
+    color: '#632828',
   },
   container: {
     alignItems: 'center',
@@ -31,7 +31,7 @@ export const loginScreenStyles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6C7A89',
+    color: '#04080b',
     marginTop: 6,
     marginBottom: 30,
   },
@@ -45,7 +45,7 @@ export const loginScreenStyles = StyleSheet.create({
   },
   input: {
     marginBottom: 16,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#a5acb4',
   },
   inputOutline: {
     borderRadius: 10,
