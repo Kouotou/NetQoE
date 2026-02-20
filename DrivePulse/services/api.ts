@@ -25,6 +25,36 @@ export interface UserResponse {
   created_at: string;
 }
 
+export interface SessionResponse {
+  id: string;
+  user_id: string;
+  start_time: string;
+  end_time?: string;
+}
+
+export interface MeasurementData {
+  technology: string;
+  rssi?: number;
+  rsrp?: number;
+  sinr?: number;
+  cell_id?: number;
+  frequency?: number;
+  bandwidth?: number;
+  pci?: number;
+  latitude: number;
+  longitude: number;
+  recorded_at: string;
+}
+
+export interface MosFeedbackData {
+  rating: number;
+  emotion?: string;
+  comment?: string;
+  technology?: string;
+  latitude: number;
+  longitude: number;
+}
+
 class ApiService {
   private token: string | null = null;
 
@@ -78,6 +108,38 @@ class ApiService {
     return this.request<UserResponse>('/auth/register', {
       method: 'POST',
       body: JSON.stringify(userData),
+    });
+  }
+
+  async startSession(): Promise<SessionResponse> {
+    return this.request<SessionResponse>('/sessions/start', {
+      method: 'POST',
+    });
+  }
+
+  async uploadMeasurement(sessionId: string, measurement: MeasurementData): Promise<any> {
+    return this.request('/upload/batch', {
+      method: 'POST',
+      body: JSON.stringify({
+        session_id: sessionId,
+        measurements: [measurement],
+        speed_tests: [],
+        events: [],
+        mos_feedback: []
+      }),
+    });
+  }
+
+  async uploadMosFeedback(sessionId: string, feedback: MosFeedbackData): Promise<any> {
+    return this.request('/upload/batch', {
+      method: 'POST',
+      body: JSON.stringify({
+        session_id: sessionId,
+        measurements: [],
+        speed_tests: [],
+        events: [],
+        mos_feedback: [feedback]
+      }),
     });
   }
 }

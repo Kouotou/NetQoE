@@ -40,6 +40,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setToken(storedToken);
         setUser(storedUser);
         apiService.setToken(storedToken);
+        console.log('Restored token in API service:', storedToken.substring(0, 20) + '...');
       }
     } catch (error) {
       console.error('Error loading stored auth:', error);
@@ -51,6 +52,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (newToken: string, newUser?: User) => {
     setToken(newToken);
     apiService.setToken(newToken);
+    console.log('Token set in API service:', newToken.substring(0, 20) + '...');
     if (newUser) {
       setUser(newUser);
       await AuthStorage.saveUser(newUser);
