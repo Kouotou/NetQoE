@@ -5,7 +5,7 @@ import os
 
 # Use an environment variable for the DB URL, or default to a local Postgres instance
 # Format: postgresql+psycopg://user:password@host/dbname
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg://postgres:postgres@localhost/drivepulse")
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg://postgres:postgress123@localhost/drivepulse")
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

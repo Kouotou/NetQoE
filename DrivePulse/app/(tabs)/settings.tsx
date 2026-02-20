@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, ScrollView } from 'react-native'
+import { View, ScrollView, Alert } from 'react-native'
 import {
   Text,
   Switch,
@@ -11,8 +11,13 @@ import {
 } from 'react-native-paper'
 import Slider from '@react-native-community/slider'
 import { settingScreenStyles as styles } from "@/styles";
+import { useAuth } from '../../contexts/AuthContext';
+import { useRouter } from 'expo-router';
 
 export default function SettingsScreen() {
+  const { user, logout } = useAuth();
+  const router = useRouter();
+  
   const [rssi, setRssi] = useState(true)
   const [rsrp, setRsrp] = useState(true)
   const [sinr, setSinr] = useState(true)
@@ -21,6 +26,24 @@ export default function SettingsScreen() {
 
   const [logFrequency, setLogFrequency] = useState(5)
 
+  const handleLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Logout',
+          style: 'destructive',
+          onPress: async () => {
+            await logout();
+            router.replace('/splashScreen');
+          }
+        }
+      ]
+    );
+  };
+
   return (
     <ScrollView style={styles.container}>
       
@@ -28,8 +51,9 @@ export default function SettingsScreen() {
       <Card style={styles.card}>
         <Card.Title title="Profile" subtitle="DrivePulse User" />
         <Card.Content>
-          <Text>Email: user@drivepulse.com</Text>
-          <Text>Role: Field Engineer</Text>
+          <Text>Email: {user?.email || 'Not logged in'}</Text>
+          <Text>Name: {user?.full_name || 'N/A'}</Text>
+          <Text>University: {user?.university || 'N/A'}</Text>
         </Card.Content>
       </Card>
 
@@ -136,6 +160,14 @@ export default function SettingsScreen() {
             onPress={() => console.log('Reset System')}
           >
             Reset Application
+          </Button>
+
+          <Button
+            mode="contained"
+            style={[styles.dangerButton, { marginTop: 10 }]}
+            onPress={handleLogout}
+          >
+            Logout
           </Button>
 
         </Card.Content>
