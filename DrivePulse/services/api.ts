@@ -55,6 +55,28 @@ export interface MosFeedbackData {
   longitude: number;
 }
 
+export interface EventData {
+  id: string;
+  event_type: string;
+  latitude: number;
+  longitude: number;
+  signal_strength?: number;
+  recorded_at: string;
+}
+
+export interface SessionData {
+  id: string;
+  user_id: string;
+  start_time: string;
+  end_time?: string;
+  avg_rssi?: number;
+  total_distance_km: number;
+  drops_count: number;
+  handovers_count: number;
+  speedtest_count: number;
+  error_count: number;
+}
+
 class ApiService {
   private token: string | null = null;
 
@@ -143,11 +165,11 @@ class ApiService {
     });
   }
 
-  async uploadSpeedTest(speedTest: any): Promise<any> {
+  async uploadSpeedTest(sessionId: string, speedTest: any): Promise<any> {
     return this.request('/upload/batch', {
       method: 'POST',
       body: JSON.stringify({
-        session_id: 'temp-session', // Would need actual session ID
+        session_id: sessionId,
         measurements: [],
         speed_tests: [{
           download_mbps: speedTest.downloadMbps,
@@ -161,6 +183,20 @@ class ApiService {
         events: [],
         mos_feedback: []
       }),
+    });
+  }
+
+  async getUserSessions(): Promise<SessionData[]> {
+    return this.request<SessionData[]>('/sessions/user');
+  }
+
+  async getSessionEvents(sessionId: string): Promise<EventData[]> {
+    return this.request<EventData[]>(`/sessions/${sessionId}/events`);
+  }
+
+  async deleteSession(sessionId: string): Promise<any> {
+    return this.request(`/sessions/${sessionId}`, {
+      method: 'DELETE',
     });
   }
 }

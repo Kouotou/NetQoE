@@ -12,6 +12,18 @@ export const logScreenStyles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  logoutButton: {
+    color: '#1565C0',
+    fontWeight: '600',
+    fontSize: 16,
+  },
   toggleContainer: {
     flexDirection: 'row',
     backgroundColor: '#E5E7EB',

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from uuid import UUID
 from datetime import datetime
+from typing import List
 
 from ..database import get_db
 from ..models import models
@@ -47,3 +48,44 @@ def end_session(
     db.commit()
     db.refresh(session)
     return session
+
+@router.get("/user", response_model=List[schemas.SessionResponse])
+def get_user_sessions(
+    current_user: models.User = Depends(security.get_current_user),
+    db: Session = Depends(get_db)
+):
+    sessions = db.query(models.Session).filter(models.Session.user_id == current_user.id).all()
+    return sessions
+
+@router.get("/{session_id}/events")
+def get_session_events(
+    session_id: UUID,
+    current_user: models.User = Depends(security.get_current_user),
+    db: Session = Depends(get_db)
+):
+    session = db.query(models.Session).filter(models.Session.id == session_id).first()
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+    
+    if session.user_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not authorized to access this session")
+    
+    events = db.query(models.Event).filter(models.Event.session_id == session_id).all()
+    return events
+
+@router.delete("/{session_id}")
+def delete_session(
+    session_id: UUID,
+    current_user: models.User = Depends(security.get_current_user),
+    db: Session = Depends(get_db)
+):
+    session = db.query(models.Session).filter(models.Session.id == session_id).first()
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+    
+    if session.user_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not authorized to delete this session")
+    
+    db.delete(session)
+    db.commit()
+    return {"message": "Session deleted successfully"}

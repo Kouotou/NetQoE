@@ -25,6 +25,7 @@ import { speedTestService, SpeedTestResult, SpeedTestProgress } from '../../serv
 import { useNetwork } from '../../contexts/NetworkContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { apiService } from '../../services/api';
+import { AuthStorage } from '../../services/authStorage';
 import { useRouter } from 'expo-router';
 
 
@@ -103,6 +104,24 @@ export default function SpeedScreen() {
   const [progress, setProgress] = useState({ phase: 'idle', progress: 0 });
   const [results, setResults] = useState<SpeedTestResult | null>(null);
   const [currentSpeed, setCurrentSpeed] = useState(0);
+  const [currentSession, setCurrentSession] = useState<any>(null);
+
+  useEffect(() => {
+    initializeSession();
+  }, []);
+
+  const initializeSession = async () => {
+    const token = await AuthStorage.getToken();
+    if (token) {
+      apiService.setToken(token);
+      try {
+        const session = await apiService.startSession();
+        setCurrentSession(session);
+      } catch (error) {
+        console.error('Failed to start session:', error);
+      }
+    }
+  };
 
   const handleLogout = () => {
     Alert.alert(
@@ -147,10 +166,12 @@ export default function SpeedScreen() {
       setResults(result);
       
       // Upload to backend
-      try {
-        await apiService.uploadSpeedTest(result);
-      } catch (error) {
-        console.error('Failed to upload speed test:', error);
+      if (currentSession) {
+        try {
+          await apiService.uploadSpeedTest(currentSession.id, result);
+        } catch (error) {
+          console.error('Failed to upload speed test:', error);
+        }
       }
       
     } catch (error) {
