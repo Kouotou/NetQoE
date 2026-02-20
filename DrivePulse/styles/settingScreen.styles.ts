@@ -32,6 +32,28 @@ export const settingScreenStyles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: '#D32F2F',
   },
+
+  statsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 10,
+  },
+
+  statItem: {
+    alignItems: 'center',
+  },
+
+  statValue: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1565C0',
+  },
+
+  statLabel: {
+    fontSize: 12,
+    color: '#666',
+    marginTop: 4,
+  },
 });
 
 

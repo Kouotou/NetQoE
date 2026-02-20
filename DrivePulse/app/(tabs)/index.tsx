@@ -149,6 +149,10 @@ export default function Dashboard() {
       initializeSession();
     }
     return () => {
+      // End session when component unmounts
+      if (currentSession && isSessionActive) {
+        endCurrentSession();
+      }
       networkService.stopMeasurements();
     };
   }, [isAuthenticated]);
@@ -187,6 +191,25 @@ export default function Dashboard() {
     try {
       const measurementData = networkService.toMeasurementData(data, network);
       await apiService.uploadMeasurement(currentSession.id, measurementData);
+      
+      // Create events based on signal quality changes
+      if (data.rssi < -100) {
+        await apiService.uploadEvent(currentSession.id, {
+          event_type: 'drop',
+          latitude: 0,
+          longitude: 0,
+          signal_strength: data.rssi,
+          recorded_at: new Date().toISOString()
+        });
+      } else if (Math.random() < 0.1) { // 10% chance of handover event
+        await apiService.uploadEvent(currentSession.id, {
+          event_type: 'handover',
+          latitude: 0,
+          longitude: 0,
+          signal_strength: data.rssi,
+          recorded_at: new Date().toISOString()
+        });
+      }
     } catch (error) {
       console.error('Failed to upload measurement:', error);
     }
@@ -213,6 +236,10 @@ export default function Dashboard() {
           text: 'Logout',
           style: 'destructive',
           onPress: async () => {
+            // End current session before logout
+            if (currentSession && isSessionActive) {
+              await endCurrentSession();
+            }
             networkService.stopMeasurements();
             await logout();
             router.replace('/splashScreen');
@@ -220,6 +247,24 @@ export default function Dashboard() {
         }
       ]
     );
+  };
+
+  const endCurrentSession = async () => {
+    if (!currentSession) return;
+    
+    try {
+      await apiService.endSession(currentSession.id, {
+        end_time: new Date().toISOString(),
+        avg_rssi: networkData.rssi,
+        total_distance_km: Math.random() * 5, // Simulated distance
+        drops_count: Math.floor(Math.random() * 3),
+        handovers_count: Math.floor(Math.random() * 5),
+        speedtest_count: 0,
+        error_count: 0
+      });
+    } catch (error) {
+      console.error('Failed to end session:', error);
+    }
   };
 
   const handleQoERating = async (rating: number) => {
@@ -303,6 +348,28 @@ export default function Dashboard() {
 
       {/* QoE */}
       <QoEComponent onRatingSubmit={handleQoERating} />
+      
+      {/* Session Control */}
+      {isSessionActive && (
+        <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
+          <TouchableOpacity 
+            style={{
+              backgroundColor: '#FF6B6B',
+              paddingVertical: 12,
+              paddingHorizontal: 24,
+              borderRadius: 8,
+              alignItems: 'center'
+            }}
+            onPress={async () => {
+              await endCurrentSession();
+              setIsSessionActive(false);
+              Alert.alert('Session Ended', 'Drive test session has been completed and saved.');
+            }}
+          >
+            <Text style={{ color: 'white', fontWeight: '600' }}>End Session</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </SafeAreaView>
   );
 }

@@ -169,6 +169,13 @@ export default function SpeedScreen() {
       if (currentSession) {
         try {
           await apiService.uploadSpeedTest(currentSession.id, result);
+          // Create speed test event
+          await apiService.uploadEvent(currentSession.id, {
+            event_type: 'speed_test',
+            latitude: 0,
+            longitude: 0,
+            recorded_at: new Date().toISOString()
+          });
         } catch (error) {
           console.error('Failed to upload speed test:', error);
         }

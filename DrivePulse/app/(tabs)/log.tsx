@@ -78,9 +78,9 @@ const LogScreen = () => {
           formatDuration(new Date(session.end_time).getTime() - new Date(session.start_time).getTime()) : 
           'Ongoing',
         avgSignal: session.avg_rssi ? `${session.avg_rssi} dBm` : 'N/A',
-        events: session.drops_count + session.handovers_count + session.speedtest_count,
-        network: 'LTE', // Default, could be enhanced
-        distance: session.total_distance_km
+        events: (session.drops_count || 0) + (session.handovers_count || 0) + (session.speedtest_count || 0),
+        network: 'LTE',
+        distance: session.total_distance_km || 0
       }));
       setSessions(formattedSessions);
       
@@ -231,9 +231,22 @@ const LogScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>DrivePulse</Text>
-        <TouchableOpacity onPress={handleLogout}>
-          <Text style={styles.logoutButton}>Logout</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', gap: 15 }}>
+          <TouchableOpacity onPress={() => {
+            if (activeTab === 'sessions') {
+              loadSessions();
+            } else {
+              if (selectedSessionId) {
+                loadSessionEvents(selectedSessionId);
+              }
+            }
+          }}>
+            <Text style={styles.logoutButton}>Refresh</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleLogout}>
+            <Text style={styles.logoutButton}>Logout</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Toggle */}

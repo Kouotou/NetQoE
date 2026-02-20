@@ -199,6 +199,26 @@ class ApiService {
       method: 'DELETE',
     });
   }
+
+  async endSession(sessionId: string, sessionData: any): Promise<any> {
+    return this.request(`/sessions/${sessionId}/end`, {
+      method: 'PATCH',
+      body: JSON.stringify(sessionData),
+    });
+  }
+
+  async uploadEvent(sessionId: string, event: any): Promise<any> {
+    return this.request('/upload/batch', {
+      method: 'POST',
+      body: JSON.stringify({
+        session_id: sessionId,
+        measurements: [],
+        speed_tests: [],
+        events: [event],
+        mos_feedback: []
+      }),
+    });
+  }
 }
 
 export const apiService = new ApiService();
