@@ -133,4 +133,12 @@ export const mapScreenStyles = StyleSheet.create({
     fontSize: 12,
     color: "#9CA3AF",
   },
+
+  currentLocationMarker: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    borderWidth: 3,
+    borderColor: "#FFFFFF",
+  },
 });
