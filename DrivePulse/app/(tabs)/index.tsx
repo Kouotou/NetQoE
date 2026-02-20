@@ -13,6 +13,7 @@ import { dashboardScreenStyles as styles } from "@/styles";
 import { networkService, NetworkData } from "../../services/networkService";
 import { apiService, SessionResponse, MosFeedbackData } from "../../services/api";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNetwork } from "../../contexts/NetworkContext";
 import { AuthStorage } from "../../services/authStorage";
 import { useRouter } from "expo-router";
 
@@ -127,8 +128,9 @@ const InfoRow = ({ label, value }: { label: string; value: string }) => (
 
 export default function Dashboard() {
   const { isAuthenticated, logout } = useAuth();
+  const { selectedNetwork, setSelectedNetwork } = useNetwork();
   const router = useRouter();
-  const [network, setNetwork] = useState("4G");
+  const [network, setNetwork] = useState(selectedNetwork);
   const [networkData, setNetworkData] = useState<NetworkData>({
     rssi: -81,
     rsrp: -95,
@@ -192,6 +194,7 @@ export default function Dashboard() {
 
   const handleNetworkChange = (newNetwork: string) => {
     setNetwork(newNetwork);
+    setSelectedNetwork(newNetwork);
     if (isSessionActive) {
       networkService.updateTechnology(newNetwork, (data) => {
         setNetworkData(data);

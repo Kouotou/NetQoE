@@ -64,7 +64,23 @@ export const speedScreenStyles = StyleSheet.create({
     marginTop: 'auto', // Pushes to bottom of content area
     marginBottom: 100, // Adjusted for bottom nav space
   },
+  runTestButtonDisabled: {
+    backgroundColor: '#A0AEC0',
+  },
   runTestText: { color: '#FFF', fontSize: 16, fontWeight: '800', letterSpacing: 1 },
+
+  networkIndicator: {
+    backgroundColor: '#F0F9FF',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    marginTop: 20,
+  },
+  networkText: {
+    color: COLORS.primary,
+    fontSize: 14,
+    fontWeight: '600',
+  },
 
   // Header & Nav (Duplicate from Dashboard for standalone use)
   header: { /* same as Dashboard */ flexDirection: 'row', justifyContent: 'space-between', padding: 20 },

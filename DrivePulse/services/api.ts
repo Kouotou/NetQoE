@@ -142,6 +142,27 @@ class ApiService {
       }),
     });
   }
+
+  async uploadSpeedTest(speedTest: any): Promise<any> {
+    return this.request('/upload/batch', {
+      method: 'POST',
+      body: JSON.stringify({
+        session_id: 'temp-session', // Would need actual session ID
+        measurements: [],
+        speed_tests: [{
+          download_mbps: speedTest.downloadMbps,
+          upload_mbps: speedTest.uploadMbps,
+          ping_ms: speedTest.pingMs,
+          jitter_ms: speedTest.jitterMs,
+          latitude: 0,
+          longitude: 0,
+          recorded_at: speedTest.timestamp
+        }],
+        events: [],
+        mos_feedback: []
+      }),
+    });
+  }
 }
 
 export const apiService = new ApiService();
