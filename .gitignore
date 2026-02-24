@@ -43,3 +43,10 @@ google-services.json
 /app/build
 /captures
 .externalNativeBuild
+venv/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+.vscode/
+node_modules
