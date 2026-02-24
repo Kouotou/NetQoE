@@ -46,9 +46,11 @@ export const signupScreenStyles = StyleSheet.create({
   input: {
     marginBottom: 16,
     backgroundColor: '#a1a5ab',
+    color: '#1C2A39',
   },
   inputOutline: {
     borderRadius: 10,
+    color: '#1C2A39',
   },
   checkboxContainer: {
     flexDirection: 'row',

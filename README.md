@@ -81,7 +81,8 @@ Default: `postgresql+psycopg://postgres:postgres@localhost/drivepulse`
 Start the server with hot-reload enabled:
 
 ```bash
-uvicorn app.main:app --reload
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload 
+# <--uvicorn app.main:app --reload-->
 ```
 
 ## 📚 API Documentation

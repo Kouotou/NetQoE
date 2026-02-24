@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://192.168.88.126:8000';
+const API_BASE_URL = 'http://10.115.27.41:8000';
 
 export interface LoginRequest {
   email: string;
@@ -15,6 +15,7 @@ export interface RegisterRequest {
 export interface AuthResponse {
   access_token: string;
   token_type: string;
+  user: UserResponse;
 }
 
 export interface UserResponse {

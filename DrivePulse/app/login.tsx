@@ -27,7 +27,7 @@ export default function Login() {
       const credentials: LoginRequest = { email, password };
       const response = await apiService.login(credentials);
       
-      await login(response.access_token);
+      await login(response.access_token, response.user);
       
       Alert.alert("Success", "Login successful!", [
         { text: "OK", onPress: () => router.push("/(tabs)") }
@@ -70,6 +70,7 @@ export default function Login() {
             autoCapitalize="none"
             style={styles.input}
             outlineStyle={styles.inputOutline}
+            textColor="#1C2A39"
           />
 
           <Text style={styles.label}>Password</Text>
@@ -81,6 +82,7 @@ export default function Login() {
             secureTextEntry={!passwordVisible}
             style={styles.input}
             outlineStyle={styles.inputOutline}
+            textColor="#1C2A39"
             right={
               <TextInput.Icon
                 icon={passwordVisible ? "eye-off" : "eye"}

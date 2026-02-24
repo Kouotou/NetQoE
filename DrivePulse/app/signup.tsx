@@ -81,6 +81,7 @@ export default function Signup() {
             onChangeText={setFullName}
             style={styles.input}
             outlineStyle={styles.inputOutline}
+            textColor="#1C2A39"
           />
 
           <Text style={styles.label}>Email / Student ID</Text>
@@ -93,6 +94,7 @@ export default function Signup() {
             autoCapitalize="none"
             style={styles.input}
             outlineStyle={styles.inputOutline}
+            textColor="#1C2A39"
           />
 
           <Text style={styles.label}>Organization/University Name</Text>
@@ -103,6 +105,7 @@ export default function Signup() {
             onChangeText={setUniversity}
             style={styles.input}
             outlineStyle={styles.inputOutline}
+            textColor="#1C2A39"
           />
 
           <Text style={styles.label}>Password</Text>
@@ -114,6 +117,7 @@ export default function Signup() {
             secureTextEntry={!passwordVisible}
             style={styles.input}
             outlineStyle={styles.inputOutline}
+            textColor="#1C2A39"
             right={
               <TextInput.Icon
                 icon={passwordVisible ? 'eye-off' : 'eye'}
